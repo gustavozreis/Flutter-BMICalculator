@@ -2,11 +2,9 @@ import 'package:bmi_calculator/view/widgets/divided_box.dart';
 import 'package:bmi_calculator/view/widgets/icon_content.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'constants.dart';
 
-const bottomContainerHeight = 80.0;
-const activeCardColor = Color(0xFF1D1E33);
-const inactiveCardColor = Color(0xFF111328);
-const bottomContainerCardColor = Color(0xFFEB1555);
+enum Gender { MALE, FEMALE }
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -16,16 +14,17 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  Color maleCardColor = inactiveCardColor;
-  Color femaleCardColor = inactiveCardColor;
+  Color maleCardColor = kInactiveCardColor;
+  Color femaleCardColor = kInactiveCardColor;
+  int height = 180;
 
-  void updateCardColor(int gender) {
-    if (gender == 1) {
-      maleCardColor = activeCardColor;
-      femaleCardColor = inactiveCardColor;
-    } else if (gender == 2) {
-      maleCardColor = inactiveCardColor;
-      femaleCardColor = activeCardColor;
+  void updateCardColor(Gender gender) {
+    if (gender == Gender.MALE) {
+      maleCardColor = kActiveCardColor;
+      femaleCardColor = kInactiveCardColor;
+    } else if (gender == Gender.FEMALE) {
+      maleCardColor = kInactiveCardColor;
+      femaleCardColor = kActiveCardColor;
     }
   }
 
@@ -42,32 +41,28 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        updateCardColor(1);
-                      });
-                    },
-                    child: DividedBox(
-                        color: maleCardColor,
-                        cardChild: const IconContent(
-                          icon: FontAwesomeIcons.mars,
-                          text: 'MALE',
-                        )),
-                  ),
+                  child: DividedBox(
+                      onPress: () {
+                        setState(() {
+                          updateCardColor(Gender.MALE);
+                        });
+                      },
+                      color: maleCardColor,
+                      cardChild: const IconContent(
+                        icon: FontAwesomeIcons.mars,
+                        text: 'MALE',
+                      )),
                 ),
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  child: DividedBox(
+                    onPress: () {
                       setState(() {
-                        updateCardColor(2);
+                        updateCardColor(Gender.FEMALE);
                       });
                     },
-                    child: DividedBox(
-                      color: femaleCardColor,
-                      cardChild: const IconContent(
-                          icon: FontAwesomeIcons.venus, text: 'FEMALE'),
-                    ),
+                    color: femaleCardColor,
+                    cardChild: const IconContent(
+                        icon: FontAwesomeIcons.venus, text: 'FEMALE'),
                   ),
                 ),
               ],
@@ -79,6 +74,52 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: DividedBox(
                     color: Color(0xFF1C1C2D),
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'HEIGHT',
+                          style: kTextStyle,
+                        ),
+                        Row(
+                          textBaseline: TextBaseline.alphabetic,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              height.toString(),
+                              style: kHeightTextStyle,
+                            ),
+                            Text(
+                              'CM',
+                              style: kTextStyle,
+                            )
+                          ],
+                        ),
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            activeTrackColor: Colors.white,
+                            inactiveTrackColor: Color(0xFF8D8E98),
+                            thumbColor: Color(0xFFEB1555),
+                            overlayColor: Color(0x29EB1555),
+                            thumbShape:
+                                RoundSliderThumbShape(enabledThumbRadius: 14.0),
+                            overlayShape:
+                                RoundSliderOverlayShape(overlayRadius: 30.0),
+                          ),
+                          child: Slider(
+                            value: height.toDouble(),
+                            min: 120.0,
+                            max: 220.0,
+                            onChanged: (double newValue) {
+                              setState(() {
+                                height = newValue.toInt();
+                              });
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
