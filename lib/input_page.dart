@@ -3,6 +3,11 @@ import 'package:bmi_calculator/view/widgets/icon_content.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+const bottomContainerHeight = 80.0;
+const activeCardColor = Color(0xFF1D1E33);
+const inactiveCardColor = Color(0xFF111328);
+const bottomContainerCardColor = Color(0xFFEB1555);
+
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
 
@@ -11,6 +16,19 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  Color maleCardColor = inactiveCardColor;
+  Color femaleCardColor = inactiveCardColor;
+
+  void updateCardColor(int gender) {
+    if (gender == 1) {
+      maleCardColor = activeCardColor;
+      femaleCardColor = inactiveCardColor;
+    } else if (gender == 2) {
+      maleCardColor = inactiveCardColor;
+      femaleCardColor = activeCardColor;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,18 +42,32 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: DividedBox(
-                      color: const Color(0xFF1C1C2D),
-                      cardChild: const IconContent(
-                        icon: FontAwesomeIcons.mars,
-                        text: 'MALE',
-                      )),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        updateCardColor(1);
+                      });
+                    },
+                    child: DividedBox(
+                        color: maleCardColor,
+                        cardChild: const IconContent(
+                          icon: FontAwesomeIcons.mars,
+                          text: 'MALE',
+                        )),
+                  ),
                 ),
                 Expanded(
-                  child: DividedBox(
-                    color: const Color(0xFF1C1C2D),
-                    cardChild: const IconContent(
-                        icon: FontAwesomeIcons.venus, text: 'FEMALE'),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        updateCardColor(2);
+                      });
+                    },
+                    child: DividedBox(
+                      color: femaleCardColor,
+                      cardChild: const IconContent(
+                          icon: FontAwesomeIcons.venus, text: 'FEMALE'),
+                    ),
                   ),
                 ),
               ],

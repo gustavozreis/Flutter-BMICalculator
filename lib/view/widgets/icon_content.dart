@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+const textStyle = TextStyle(
+  fontSize: 18.0,
+  color: Color(0xFF8D8E98),
+);
 
 class IconContent extends StatelessWidget {
   const IconContent({Key? key, required this.icon, required this.text})
@@ -15,17 +19,14 @@ class IconContent extends StatelessWidget {
       children: [
         Icon(
           icon,
-          size: 80.0,
+          size: 75.0,
         ),
         const SizedBox(
           height: 15.0,
         ),
         Text(
           text,
-          style: const TextStyle(
-            fontSize: 18.0,
-            color: Color(0xFF8D8E98),
-          ),
+          style: textStyle,
         ),
       ],
     );
