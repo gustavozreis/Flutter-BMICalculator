@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../constants.dart';
 import 'package:bmi_calculator/view/widgets/round_icon_button.dart';
 import 'package:bmi_calculator/view/results_page.dart';
+import 'package:bmi_calculator/view/widgets/bottom_button.dart';
 
 enum Gender { MALE, FEMALE }
 
@@ -54,6 +55,13 @@ class _InputPageState extends State<InputPage> {
     setState(() {
       age--;
     });
+  }
+
+  void calculate() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ResultsPage()),
+    );
   }
 
   @override
@@ -230,34 +238,8 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextButton(
-              onPressed: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ResultsPage(),
-                  ),
-                ),
-              },
-              style: TextButton.styleFrom(
-                primary: Colors.white,
-                backgroundColor: Colors.pink,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    'CALCULATE',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+              padding: const EdgeInsets.all(10.0),
+              child: BottomButton(label: 'CALCULATE', onTap: calculate)),
         ],
       ),
     );

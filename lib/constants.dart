@@ -14,3 +14,26 @@ const kHeightTextStyle = TextStyle(
   fontSize: 50.0,
   fontWeight: FontWeight.w900,
 );
+
+const kYourResultStyle = TextStyle(
+  fontSize: 40.0,
+  fontWeight: FontWeight.w800,
+);
+
+const kResultTypeStyle = TextStyle(
+  fontSize: 20.0,
+  fontWeight: FontWeight.w700,
+  color: Color(0xFF4FAF7C),
+);
+
+const kResultWeight = TextStyle(
+  fontSize: 100.0,
+  fontWeight: FontWeight.w800,
+  color: Colors.white,
+);
+
+const kBodyTextStyle = TextStyle(
+  fontSize: 16.0,
+  fontWeight: FontWeight.w500,
+  color: Colors.white,
+);
