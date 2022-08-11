@@ -3,6 +3,7 @@ import 'package:bmi_calculator/view/widgets/icon_content.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
+import 'package:bmi_calculator/view/widgets/round_icon_button.dart';
 
 enum Gender { MALE, FEMALE }
 
@@ -17,6 +18,7 @@ class _InputPageState extends State<InputPage> {
   Color maleCardColor = kInactiveCardColor;
   Color femaleCardColor = kInactiveCardColor;
   int height = 180;
+  int weigth = 60;
 
   void updateCardColor(Gender gender) {
     if (gender == Gender.MALE) {
@@ -26,6 +28,18 @@ class _InputPageState extends State<InputPage> {
       maleCardColor = kInactiveCardColor;
       femaleCardColor = kActiveCardColor;
     }
+  }
+
+  void increaseWeigth() {
+    setState(() {
+      weigth++;
+    });
+  }
+
+  void decreaseWeigth() {
+    setState(() {
+      weigth--;
+    });
   }
 
   @override
@@ -131,6 +145,37 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: DividedBox(
                     color: Color(0xFF1C1C2D),
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'WEIGTH',
+                          style: kTextStyle,
+                        ),
+                        Text(
+                          weigth.toString(),
+                          style: kHeightTextStyle,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              onPress: increaseWeigth,
+                              icon: FontAwesomeIcons.plus,
+                            ),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                              onPress: decreaseWeigth,
+                              icon: FontAwesomeIcons.minus,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
