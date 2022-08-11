@@ -2,8 +2,9 @@ import 'package:bmi_calculator/view/widgets/divided_box.dart';
 import 'package:bmi_calculator/view/widgets/icon_content.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'constants.dart';
+import '../constants.dart';
 import 'package:bmi_calculator/view/widgets/round_icon_button.dart';
+import 'package:bmi_calculator/view/results_page.dart';
 
 enum Gender { MALE, FEMALE }
 
@@ -19,6 +20,7 @@ class _InputPageState extends State<InputPage> {
   Color femaleCardColor = kInactiveCardColor;
   int height = 180;
   int weigth = 60;
+  int age = 30;
 
   void updateCardColor(Gender gender) {
     if (gender == Gender.MALE) {
@@ -39,6 +41,18 @@ class _InputPageState extends State<InputPage> {
   void decreaseWeigth() {
     setState(() {
       weigth--;
+    });
+  }
+
+  void increaseAge() {
+    setState(() {
+      age++;
+    });
+  }
+
+  void decreaseAge() {
+    setState(() {
+      age--;
     });
   }
 
@@ -87,11 +101,11 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: DividedBox(
-                    color: Color(0xFF1C1C2D),
+                    color: const Color(0xFF1C1C2D),
                     cardChild: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'HEIGHT',
                           style: kTextStyle,
                         ),
@@ -104,7 +118,7 @@ class _InputPageState extends State<InputPage> {
                               height.toString(),
                               style: kHeightTextStyle,
                             ),
-                            Text(
+                            const Text(
                               'CM',
                               style: kTextStyle,
                             )
@@ -113,13 +127,13 @@ class _InputPageState extends State<InputPage> {
                         SliderTheme(
                           data: SliderTheme.of(context).copyWith(
                             activeTrackColor: Colors.white,
-                            inactiveTrackColor: Color(0xFF8D8E98),
-                            thumbColor: Color(0xFFEB1555),
-                            overlayColor: Color(0x29EB1555),
-                            thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 14.0),
-                            overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 30.0),
+                            inactiveTrackColor: const Color(0xFF8D8E98),
+                            thumbColor: const Color(0xFFEB1555),
+                            overlayColor: const Color(0x29EB1555),
+                            thumbShape: const RoundSliderThumbShape(
+                                enabledThumbRadius: 14.0),
+                            overlayShape: const RoundSliderOverlayShape(
+                                overlayRadius: 30.0),
                           ),
                           child: Slider(
                             value: height.toDouble(),
@@ -181,9 +195,67 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: DividedBox(
                     color: Color(0xFF1C1C2D),
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'AGE',
+                          style: kTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kHeightTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                                onPress: increaseAge,
+                                icon: FontAwesomeIcons.plus),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                                onPress: decreaseAge,
+                                icon: FontAwesomeIcons.minus),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: TextButton(
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultsPage(),
+                  ),
+                ),
+              },
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+                backgroundColor: Colors.pink,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    'CALCULATE',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
